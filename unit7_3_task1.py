@@ -139,7 +139,6 @@ def create_cards(type, quantity):
     return _contact_list
 
 
-
 P1 = BasicContact(name = "Karolina", surname = "Wysocka", phone = "123 666 677", mail="KarolinaWysocka@dayrep.com")
 P2 = BusinessContact(name = "Karolina", surname = "Wysocka", company="Alpha Beta", position = 50397, phone = "123 666 677", work_phone = "+23 876 235 536", mail="KarolinaWysocka@dayrep.com")
 P3 = Person(name = "Karolina", surname = "Wysocka", company="Alpha Beta", position = 875, mail="KarolinaWysocka@dayrep.com")
