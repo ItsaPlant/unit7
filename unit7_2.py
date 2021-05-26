@@ -8,7 +8,7 @@ class Person:
 
         #var
 
-        self._name_len = int()
+        self._name_len = 0
 
     
 
@@ -23,7 +23,7 @@ class Person:
     #     position = {self.position}
     #     mail = {self.mail}"""
 
-    def __eq__(self, other):
+    def __eq__(self, other = 10):
         return all(
             (
                 self.name == other.name,
@@ -42,18 +42,12 @@ class Person:
 
     @property
     def name_len(self):
-
-        # name = len(self.name)
-        # surname = len(self.surname)
-        # lenght = name + surname + 1
-        # self._name_len = lenght
-
         return self._name_len
 
     @name_len.setter          ################SETTER NIE DZIAŁA
-    def name_len(self, name, surname):
-        name = len(name)
-        surname = len(surname)
+    def name_len(self, value = 10):
+        name = len(self.name)
+        surname = len(self.surname)
         lenght = (name + surname + 1)
         self._name_len = lenght
         
@@ -65,6 +59,10 @@ P4 = Person(name = "Karolina", surname = "Wysocka", company="Alpha Beta", positi
 P5 = Person(name = "Karolina", surname = "Wysocka", company="Alpha Beta", position = 345, mail="KarolinaWysocka@dayrep.com")
 
 P1.contact()
-print(P1.name_len)
+# print(P1.name_len)
 #print(len(P1.name))
-print()
+
+P1.name_len = 10
+to_print = P1.name_len
+
+print(to_print)
