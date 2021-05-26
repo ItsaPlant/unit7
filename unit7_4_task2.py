@@ -1,4 +1,5 @@
 
+import random as rs
 mopics = []
 
 class Movie:
@@ -21,8 +22,8 @@ class Series(Movie):
         self.ep_num = ep_num
         self.ses_num = ses_num
 
-    def play:
-        super().play()
+    def play(self):
+        super().play(self)
 
     def show(self): #############################DOKONCZYC STRINGI
         seson = self.ses_num
@@ -30,13 +31,60 @@ class Series(Movie):
         ep = f"S{seson}E{epizode}"
         print(f"{self.name} {ep}")
 
-def add_mopic(type):
+def add_mopic(type, title, data):
     """mov or ser"""
-    if type == mov:
-        mopic = Movie(input('txtxtxt'))
-    elif type == ser:
-        mopic = Series(input("txtxtxt"))
-    
+    if type == "mov":
+        title = title.Movie(data)
+        mopic = title
+    elif type == "ser":
+        title = title.Movie(data)
+        mopic = title
+
     mopics.append(mopic)
 
+def get_movies():
+    movies = []
+    for title in mopics:
+        is_Movie = isinstance(title, Movie)
+        is_Series = isinstance(title, Series)
+
+        Is_SERIES = (is_Movie * is_Series)
+        if not Is_SERIES:
+            movies.append(title)
+    return sorted(movies)
+
+def get_series():
+    series = []
+    for title in mopics:
+        is_Movie = isinstance(title, Movie)
+        is_Series = isinstance(title, Series)
+
+        Is_SERIES = (is_Movie * is_Series)
+        if Is_SERIES:
+            series.append(title)
+    return sorted(series)
+
+def search(title):
+    for _title in mopics:
+        if title is _title:
+            print("shall we play?")
+            break
+        else:
+            print("no such title")
+
+def generate_views():
+    mopic = rs.choice(mopics)
+    mopic.count += 100
+
+def boost_views():
+    for i in range(10):
+        generate_views()
+
+def top_titles():
+    count_dict = []
+    for mopic in mopics:
+        count_dict[mopic] = (mopic.count)
+    count_dict = dict(sorted(count_dict.items(), key = lambda item: item[1]))
+    return count_dict
+        
 
