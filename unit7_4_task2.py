@@ -3,11 +3,12 @@ import random as rs
 mopics = []
 
 class Movie:
-    def __init__(self, name, year, genre, count):
+    def __init__(self, name, year, genre):
         self.name = name
         self.year = year
         self.genre = genre
-        self.count = count
+        #var
+        self.count = 0 #może ustawic tu i zabrać z interfaceu
 
     def play(self):
         self.count += 1
@@ -15,6 +16,13 @@ class Movie:
     def show(self):
         print(f"{self.name} {self.year}")
 
+    def is_movie():
+        return True
+
+    def is_series():
+        return False
+
+####
 
 class Series(Movie):
     def __init__(self, ep_num, ses_num, *args, **kwargs):
@@ -22,22 +30,35 @@ class Series(Movie):
         self.ep_num = ep_num
         self.ses_num = ses_num
 
-    def play(self):
-        super().play(self)
 
-    def show(self): #############################DOKONCZYC STRINGI
+    def show(self):
         seson = self.ses_num
+        if seson < 10:
+            seson = f"0{seson}"
         epizode = self.ep_num
+        if epizode < 10:
+            epizode = f"0{epizode}"
+
         ep = f"S{seson}E{epizode}"
         print(f"{self.name} {ep}")
 
-def add_mopic(type, title, data):
+    def is_movie():
+        return False
+
+    def is_series():
+        return True
+      
+
+
+#### ####
+
+def add_mopic(type, title, year, genere, season_num=None, episode_num=None):
     """mov or ser"""
     if type == "mov":
-        title = title.Movie(data)
+        title = Movie(type, title, year, genere)
         mopic = title
     elif type == "ser":
-        title = title.Movie(data)
+        title = Series(type, title, year, genere, season_num, episode_num)
         mopic = title
 
     mopics.append(mopic)
@@ -45,36 +66,26 @@ def add_mopic(type, title, data):
 def get_movies():
     movies = []
     for title in mopics:
-        is_Movie = isinstance(title, Movie)
-        is_Series = isinstance(title, Series)
-
-        Is_SERIES = (is_Movie * is_Series)
-        if not Is_SERIES:
+        if title.is_movie:
             movies.append(title)
     return sorted(movies)
 
 def get_series():
     series = []
     for title in mopics:
-        is_Movie = isinstance(title, Movie)
-        is_Series = isinstance(title, Series)
-
-        Is_SERIES = (is_Movie * is_Series)
-        if Is_SERIES:
+        if title.is_series:
             series.append(title)
     return sorted(series)
 
 def search(title):
-    for _title in mopics:
-        if title is _title:
-            print("shall we play?")
-            break
-        else:
-            print("no such title")
+    for mopic in mopics:
+        if mopic.title == title:
+            return mopic
+        return None
 
 def generate_views():
     mopic = rs.choice(mopics)
-    mopic.count += 100
+    mopic.count += rs.randit()
 
 def boost_views():
     for i in range(10):
