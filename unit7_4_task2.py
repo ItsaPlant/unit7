@@ -1,5 +1,9 @@
 
 import random as rs
+import datetime as dt
+from typing import Iterator
+from faker import Faker
+fake = Faker()
 mopics = []
 
 class Movie:
@@ -30,7 +34,6 @@ class Series(Movie):
         self.ep_num = ep_num
         self.ses_num = ses_num
 
-
     def show(self):
         seson = self.ses_num
         if seson < 10:
@@ -41,6 +44,10 @@ class Series(Movie):
 
         ep = f"S{seson}E{epizode}"
         print(f"{self.name} {ep}")
+
+    def num_of_ep(self, title):
+        count = len(search(title))
+        return count
 
     def is_movie():
         return False
@@ -55,13 +62,17 @@ class Series(Movie):
 def add_mopic(type, title, year, genere, season_num=None, episode_num=None):
     """mov or ser"""
     if type == "mov":
-        title = Movie(type, title, year, genere)
+        title = Movie(title, year, genere)
         mopic = title
     elif type == "ser":
-        title = Series(type, title, year, genere, season_num, episode_num)
+        title = Series(title, year, genere, season_num, episode_num)
         mopic = title
-
     mopics.append(mopic)
+
+def add_series(names, year, genre, ses_num):                                                                              
+    for Iterator, name in enumerate(names):
+        title = Series(Iterator, ses_num, name, year, genre)
+        mopics.append(title)
 
 def get_movies():
     movies = []
@@ -78,24 +89,50 @@ def get_series():
     return sorted(series)
 
 def search(title):
+    film_list = [None]
     for mopic in mopics:
         if mopic.title == title:
-            return mopic
-        return None
+            film_list.append(title)
+    return film_list
 
 def generate_views():
     mopic = rs.choice(mopics)
-    mopic.count += rs.randit()
+    mopic.count += rs.randint()
 
 def boost_views():
     for i in range(10):
         generate_views()
 
-def top_titles():
+def top_titles(contetnt_type):
+    """ mov or ser"""
+    _mopics = []
+    if contetnt_type == "mov":
+        _mopics = get_movies()
+    elif contetnt_type == "ser":
+        _mopics = get_series()
+    else:
+        _mopics = mopics
+
     count_dict = []
-    for mopic in mopics:
+    for mopic in _mopics:
         count_dict[mopic] = (mopic.count)
     count_dict = dict(sorted(count_dict.items(), key = lambda item: item[1]))
     return count_dict
         
+####
 
+print("Biblioteka filmów")
+
+for i in range(100):
+    add_mopic("mov", fake.country(), fake.year(), fake.day_of_week())
+    titles = []
+    for i in range(24):
+        titles.append(fake.country())
+    add_series(titles, fake.year(), fake.day_of_week(), rs.randint(1,100))
+
+
+date = dt.datetime.now().isoformat()
+
+print(f"Most mopular movies&series of today {date} ")
+top = top_titles("mov")
+print(top)
