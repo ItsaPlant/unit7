@@ -14,6 +14,9 @@ class Movie:
         #var
         self.count = 0 #może ustawic tu i zabrać z interfaceu
 
+    def __repr__(self):
+        return f"{self.name}"
+
     def play(self):
         self.count += 1
 
@@ -33,6 +36,7 @@ class Series(Movie):
         super().__init__(*args, **kwargs)
         self.ep_num = ep_num
         self.ses_num = ses_num
+        
 
     def show(self):
         seson = self.ses_num
@@ -79,14 +83,16 @@ def get_movies():
     for title in mopics:
         if title.is_movie:
             movies.append(title)
-    return sorted(movies)
+    return sorted(movies, key=lambda movie: movie.name)
+
 
 def get_series():
     series = []
     for title in mopics:
         if title.is_series:
             series.append(title)
-    return sorted(series)
+    return sorted(series, key=lambda movie: movie.name)
+
 
 def search(title):
     film_list = [None]
@@ -113,9 +119,9 @@ def top_titles(contetnt_type):
     else:
         _mopics = mopics
 
-    count_dict = []
+    count_dict = {}
     for mopic in _mopics:
-        count_dict[mopic] = (mopic.count)
+        count_dict[mopic] = mopic.count
     count_dict = dict(sorted(count_dict.items(), key = lambda item: item[1]))
     return count_dict
         
@@ -128,11 +134,13 @@ for i in range(100):
     titles = []
     for i in range(24):
         titles.append(fake.country())
-    add_series(titles, fake.year(), fake.day_of_week(), rs.randint(1,100))
+    add_series(titles, fake.year(), fake.day_of_week(), rs.randint(1,20))
 
 
 date = dt.datetime.now().isoformat()
 
 print(f"Most mopular movies&series of today {date} ")
-top = top_titles("mov")
-print(top)
+top = top_titles("ser")
+
+for title in top:
+    print(title, top[title])
