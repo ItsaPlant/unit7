@@ -103,7 +103,7 @@ def search(title):
 
 def generate_views():
     mopic = rs.choice(mopics)
-    mopic.count += rs.randint()
+    mopic.count += rs.randint(1,30)
 
 def boost_views():
     for i in range(10):
@@ -136,6 +136,8 @@ for i in range(100):
         titles.append(fake.country())
     add_series(titles, fake.year(), fake.day_of_week(), rs.randint(1,20))
 
+for mopic in mopics:
+    boost_views()
 
 date = dt.datetime.now().isoformat()
 
@@ -144,3 +146,4 @@ top = top_titles("ser")
 
 for title in top:
     print(title, top[title])
+    
